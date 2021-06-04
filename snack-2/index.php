@@ -8,15 +8,21 @@
 </head>
 <body>
   <?php
+  
   $name = $_GET['name'];
   $mail = $_GET['mail'];
   $age = $_GET['age'];
 
-  if (iconv_strlen($name) > 3 && strpos($mail, "@") !== false && strpos($mail, ".") !== false && is_numeric($age) === true) {
-    $msg = "Accesso riuscito <ul><li> Nome: " . $name . "</li><li>" . "Email: " . $mail . "</li><li>" . "Età: " . $age . "</li>";
-    echo $msg;
+  if (empty($name) || empty($mail) || empty($age)) {
+    echo "Errore: inserisci tutti i campi.";
+  } elseif (iconv_strlen($name) < 3) {
+    echo "Errore: inserire nome valido.";
+  } elseif (strpos($mail, "@") === false || strpos($mail, ".") === false) {
+    echo "Errore: inserire indirizzo mail valido.";
+  } elseif (!is_numeric($age)) {
+    echo "Errore: età non valida, inserire un numero.";
   } else {
-    echo "Accesso negato";
+    echo "Accesso autorizzato.";
   }
 
   ?>
